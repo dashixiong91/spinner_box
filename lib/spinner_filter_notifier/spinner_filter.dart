@@ -7,11 +7,11 @@ import 'providers/provider.dart';
 import 'widgets/asset.dart';
 import 'widgets/buttons.dart';
 
-part './widgets/inherited.dart';
-part './widgets/group.dart';
+part './widgets/attachment_view.dart';
 part './widgets/check_list_item.dart';
 part './widgets/explain_icon.dart';
-part './widgets/attachment_view.dart';
+part './widgets/group.dart';
+part './widgets/inherited.dart';
 
 /// 包含当前点击的分组数据 和 分组下标
 typedef STabEntityAndIndexData = (SpinnerEntity entity, int index);
@@ -152,15 +152,15 @@ class _ContentView extends StatelessWidget {
               bottom: 0,
               child: _BotButtons(),
             ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Divider(
-                height: 1,
-                color: Color(0xffEEEEEE),
-              ),
-            )
+            // Positioned(
+            //   top: 0,
+            //   left: 0,
+            //   right: 0,
+            //   child: Divider(
+            //     height: 1,
+            //     color: Color(0xffEEEEEE),
+            //   ),
+            // )
           ],
         ),
       ),
