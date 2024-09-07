@@ -126,6 +126,10 @@ class SBoxBotBtnData {
   /// 按钮装饰
   final BoxDecoration rightDecoration;
 
+  /// 自定义按钮
+  final Widget? left;
+  final Widget? right;
+
   const SBoxBotBtnData({
     this.isRest = true,
     this.leftTxt = '重置',
@@ -145,6 +149,8 @@ class SBoxBotBtnData {
         colors: [Color(0xffF56E60), Color(0xffE72410)],
       ),
     ),
+    this.left,
+    this.right
   });
 
   SBoxBotBtnData copyWith({
@@ -314,6 +320,9 @@ class SWrapThemeData {
 
   /// 按钮装饰
   final BoxDecoration unselectedDecoration;
+  
+  /// 按钮大小约束
+  final BoxConstraints constraints;
 
   const SWrapThemeData({
     this.runSpacing = 10,
@@ -329,6 +338,7 @@ class SWrapThemeData {
       borderRadius: BorderRadius.all(Radius.circular(4)),
       gradient: LinearGradient(colors: [Color(0xfff7f7f7), Color(0xfff7f7f7)]),
     ),
+    this.constraints = const BoxConstraints(minWidth: 48, minHeight: 28)
   });
 
   @override

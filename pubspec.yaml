@@ -5,8 +5,8 @@ homepage: https://github.com/boomcx/spinner_box.git
 # publish_to: https://pub.dartlang.org
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
-  flutter: ">=1.17.0"
+  sdk: ">=3.4.3 <4.0.0"
+  flutter: ">=3.22.2 <4.0.0"
 
 dependencies:
   flutter:

@@ -21,8 +21,8 @@ class WrapButton extends StatelessWidget {
     return TapScope(
       onPressed: onPressed,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-        constraints: const BoxConstraints(minWidth: 48, minHeight: 28),
+        padding: theme.itemPadding,
+        constraints: theme.constraints,
         decoration:
             isSelected ? theme.selectedDecoration : theme.unselectedDecoration,
         child: Column(
@@ -52,7 +52,7 @@ class TapScope extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      pressedOpacity: 0.6,
+      pressedOpacity: null,
       padding: EdgeInsets.zero,
       borderRadius: BorderRadius.circular(0),
       minSize: 10,

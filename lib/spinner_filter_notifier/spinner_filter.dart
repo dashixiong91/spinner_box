@@ -152,15 +152,6 @@ class _ContentView extends StatelessWidget {
               bottom: 0,
               child: _BotButtons(),
             ),
-            // Positioned(
-            //   top: 0,
-            //   left: 0,
-            //   right: 0,
-            //   child: Divider(
-            //     height: 1,
-            //     color: Color(0xffEEEEEE),
-            //   ),
-            // )
           ],
         ),
       ),
@@ -177,7 +168,7 @@ class _SpinnerContent extends StatelessWidget {
     final items = notifier.value.items;
     final single = notifier.value.singleConditionAndSingleSelect;
 
-    return ListView.separated(
+    return ListView.builder(
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       padding: EdgeInsets.only(
@@ -190,12 +181,6 @@ class _SpinnerContent extends StatelessWidget {
         return _FilterGroupScope(
           data: (items[index], index),
           child: const _GroupContent(),
-        );
-      },
-      separatorBuilder: (context, index) {
-        return const Padding(
-          padding: EdgeInsets.symmetric(vertical: 0),
-          child: Divider(height: 1, color: Color(0xffEEEEEE)),
         );
       },
       itemCount: items.length,
@@ -219,9 +204,6 @@ class _BotButtons extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: theme.backgroundColor,
-        border: const Border(
-          top: BorderSide(width: 1, color: Color(0xfff7f7f7)),
-        ),
       ),
       child: Row(
         children: [
@@ -236,24 +218,26 @@ class _BotButtons extends StatelessWidget {
                   notifier.completed(true);
                 }
               },
-              child: Container(
-                alignment: Alignment.center,
-                height: 40,
-                decoration: theme.leftDecoration,
-                child: Text(theme.leftTxt, style: theme.leftStyle),
-              ),
+              child: theme.left ??
+                  Container(
+                    alignment: Alignment.center,
+                    height: 40,
+                    decoration: theme.leftDecoration,
+                    child: Text(theme.leftTxt, style: theme.leftStyle),
+                  ),
             ),
           ),
-          const SizedBox(width: 11),
+          const SizedBox(width: 14),
           Expanded(
             child: TapScope(
               onPressed: notifier.completed,
-              child: Container(
-                alignment: Alignment.center,
-                height: 40,
-                decoration: theme.rightDecoration,
-                child: Text(theme.rightTxt, style: theme.rightStyle),
-              ),
+              child: theme.right ??
+                  Container(
+                    alignment: Alignment.center,
+                    height: 40,
+                    decoration: theme.rightDecoration,
+                    child: Text(theme.rightTxt, style: theme.rightStyle),
+                  ),
             ),
           ),
         ],
