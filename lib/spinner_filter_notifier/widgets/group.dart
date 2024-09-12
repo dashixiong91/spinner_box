@@ -7,8 +7,7 @@ class _GroupContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final group = _FilterGroupScope.of(context).$1;
 
-    return Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+    return SizedBox(
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,9 +32,10 @@ class _GroupHeader extends StatelessWidget {
     if (group.title.isEmpty) return const SizedBox();
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
+      padding: theme.padding,
       child: Wrap(
         spacing: theme.spacing,
+        runSpacing: theme.runSpacing,
         children: [
           Text(group.title, style: theme.style),
           if (group.desc.isNotEmpty) _ExplainIcon(desc: group.desc),

@@ -130,28 +130,27 @@ class SBoxBotBtnData {
   final Widget? left;
   final Widget? right;
 
-  const SBoxBotBtnData({
-    this.isRest = true,
-    this.leftTxt = '重置',
-    this.rightTxt = '确定',
-    this.backgroundColor = Colors.white,
-    this.leftStyle = const TextStyle(color: Colors.black87, fontSize: 16),
-    this.rightStyle = const TextStyle(color: Colors.white, fontSize: 16),
-    this.leftDecoration = const BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(4)),
-      gradient: LinearGradient(
-        colors: [Color(0xffeeeeee), Color(0xfff5f5f5)],
+  const SBoxBotBtnData(
+      {this.isRest = true,
+      this.leftTxt = '重置',
+      this.rightTxt = '确定',
+      this.backgroundColor = Colors.white,
+      this.leftStyle = const TextStyle(color: Colors.black87, fontSize: 16),
+      this.rightStyle = const TextStyle(color: Colors.white, fontSize: 16),
+      this.leftDecoration = const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+        gradient: LinearGradient(
+          colors: [Color(0xffeeeeee), Color(0xfff5f5f5)],
+        ),
       ),
-    ),
-    this.rightDecoration = const BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(4)),
-      gradient: LinearGradient(
-        colors: [Color(0xffF56E60), Color(0xffE72410)],
+      this.rightDecoration = const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+        gradient: LinearGradient(
+          colors: [Color(0xffF56E60), Color(0xffE72410)],
+        ),
       ),
-    ),
-    this.left,
-    this.right
-  });
+      this.left,
+      this.right});
 
   SBoxBotBtnData copyWith({
     Color? backgroundColor,
@@ -320,26 +319,29 @@ class SWrapThemeData {
 
   /// 按钮装饰
   final BoxDecoration unselectedDecoration;
-  
+
   /// 按钮大小约束
   final BoxConstraints constraints;
 
-  const SWrapThemeData({
-    this.runSpacing = 10,
-    this.spacing = 10,
-    this.itemPadding = const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-    this.selectedStyle = const TextStyle(color: Colors.white, fontSize: 12),
-    this.unselectedStyle = const TextStyle(color: Colors.black87, fontSize: 12),
-    this.selectedDecoration = const BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(4)),
-      gradient: LinearGradient(colors: [Color(0xffF56E60), Color(0xffE72410)]),
-    ),
-    this.unselectedDecoration = const BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(4)),
-      gradient: LinearGradient(colors: [Color(0xfff7f7f7), Color(0xfff7f7f7)]),
-    ),
-    this.constraints = const BoxConstraints(minWidth: 48, minHeight: 28)
-  });
+  const SWrapThemeData(
+      {this.runSpacing = 10,
+      this.spacing = 10,
+      this.itemPadding =
+          const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+      this.selectedStyle = const TextStyle(color: Colors.white, fontSize: 12),
+      this.unselectedStyle =
+          const TextStyle(color: Colors.black87, fontSize: 12),
+      this.selectedDecoration = const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+        gradient:
+            LinearGradient(colors: [Color(0xffF56E60), Color(0xffE72410)]),
+      ),
+      this.unselectedDecoration = const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+        gradient:
+            LinearGradient(colors: [Color(0xfff7f7f7), Color(0xfff7f7f7)]),
+      ),
+      this.constraints = const BoxConstraints(minWidth: 48, minHeight: 28)});
 
   @override
   bool operator ==(covariant SWrapThemeData other) {
@@ -388,6 +390,9 @@ class SWrapThemeData {
 
 /// 标题样式配置
 class SHeaderThemeData {
+  /// 间距
+  final EdgeInsetsGeometry padding;
+
   /// 标题文字样式
   final TextStyle style;
 
@@ -399,13 +404,16 @@ class SHeaderThemeData {
 
   /// 间隔
   final double spacing;
+  final double runSpacing;
 
   const SHeaderThemeData({
+    this.padding = const EdgeInsets.symmetric(vertical: 12),
     this.style = const TextStyle(color: Colors.black54, fontSize: 12),
     this.descStyle =
         const TextStyle(color: Colors.white, height: 1, fontSize: 13),
     this.iconSize = 15,
     this.spacing = 8,
+    this.runSpacing = 10,
   });
 
   @override
