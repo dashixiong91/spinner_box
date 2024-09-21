@@ -30,6 +30,9 @@ class SpinnerBoxThemeData {
   /// 弹窗背景颜色
   final Color backgroundColor;
 
+  /// 弹窗内部间距
+  final EdgeInsets padding;
+
   /// 标题样式配置
   final SHeaderThemeData header;
 
@@ -47,6 +50,8 @@ class SpinnerBoxThemeData {
 
   const SpinnerBoxThemeData({
     this.backgroundColor = Colors.white,
+    this.padding =
+        const EdgeInsets.only(left: 12, right: 12, bottom: 0, top: 0),
     this.header = const SHeaderThemeData(),
     this.wrap = const SWrapThemeData(),
     this.column = const SColumnThemeData(),
@@ -130,27 +135,28 @@ class SBoxBotBtnData {
   final Widget? left;
   final Widget? right;
 
-  const SBoxBotBtnData(
-      {this.isRest = true,
-      this.leftTxt = '重置',
-      this.rightTxt = '确定',
-      this.backgroundColor = Colors.white,
-      this.leftStyle = const TextStyle(color: Colors.black87, fontSize: 16),
-      this.rightStyle = const TextStyle(color: Colors.white, fontSize: 16),
-      this.leftDecoration = const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        gradient: LinearGradient(
-          colors: [Color(0xffeeeeee), Color(0xfff5f5f5)],
-        ),
+  const SBoxBotBtnData({
+    this.isRest = true,
+    this.leftTxt = '重置',
+    this.rightTxt = '确定',
+    this.backgroundColor = Colors.white,
+    this.leftStyle = const TextStyle(color: Colors.black87, fontSize: 16),
+    this.rightStyle = const TextStyle(color: Colors.white, fontSize: 16),
+    this.leftDecoration = const BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(4)),
+      gradient: LinearGradient(
+        colors: [Color(0xffeeeeee), Color(0xfff5f5f5)],
       ),
-      this.rightDecoration = const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        gradient: LinearGradient(
-          colors: [Color(0xffF56E60), Color(0xffE72410)],
-        ),
+    ),
+    this.rightDecoration = const BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(4)),
+      gradient: LinearGradient(
+        colors: [Color(0xffF56E60), Color(0xffE72410)],
       ),
-      this.left,
-      this.right});
+    ),
+    this.left,
+    this.right,
+  });
 
   SBoxBotBtnData copyWith({
     Color? backgroundColor,
@@ -209,8 +215,17 @@ class SColumnThemeData {
   /// 文字内容字体
   final TextStyle unselectedStyle;
 
+  /// 选中装饰
+  final BoxDecoration? selectedDecoration;
+
+  /// 未选中装饰
+  final BoxDecoration? unselectedDecoration;
+
   /// 每行高度
   final double height;
+
+  /// 内部间距
+  final EdgeInsets padding;
 
   /// 单选选中图标
   final Widget? icon1;
@@ -233,6 +248,7 @@ class SColumnThemeData {
   const SColumnThemeData({
     this.maxLine = 1,
     this.height = 30,
+    this.padding = EdgeInsets.zero,
     this.icon1,
     this.icon2,
     this.iconMulti1,
@@ -242,6 +258,8 @@ class SColumnThemeData {
         color: Color(0xffE72410), fontSize: 14, fontWeight: FontWeight.w600),
     this.unselectedStyle = const TextStyle(
         color: Color(0xff20263A), fontSize: 14, fontWeight: FontWeight.normal),
+    this.selectedDecoration,
+    this.unselectedDecoration,
   });
 
   @override
@@ -251,6 +269,7 @@ class SColumnThemeData {
     return other.selectedStyle == selectedStyle &&
         other.unselectedStyle == unselectedStyle &&
         other.height == height &&
+        other.padding == padding &&
         other.icon1 == icon1 &&
         other.icon2 == icon2 &&
         other.iconMulti1 == iconMulti1 &&
@@ -264,35 +283,44 @@ class SColumnThemeData {
     return selectedStyle.hashCode ^
         unselectedStyle.hashCode ^
         height.hashCode ^
+        padding.hashCode ^
         icon1.hashCode ^
         icon2.hashCode ^
         iconMulti1.hashCode ^
         iconMulti2.hashCode ^
         iconMulti3.hashCode ^
-        maxLine.hashCode;
+        maxLine.hashCode ^
+        selectedDecoration.hashCode ^
+        unselectedDecoration.hashCode;
   }
 
   SColumnThemeData copyWith({
     TextStyle? selectedStyle,
     TextStyle? unselectedStyle,
     double? height,
+    EdgeInsets? padding,
     Widget? icon1,
     Widget? icon2,
     Widget? iconMulti1,
     Widget? iconMulti2,
     Widget? iconMulti3,
     int? maxLine,
+    BoxDecoration? selectedDecoration,
+    BoxDecoration? unselectedDecoration,
   }) {
     return SColumnThemeData(
       selectedStyle: selectedStyle ?? this.selectedStyle,
       unselectedStyle: unselectedStyle ?? this.unselectedStyle,
       height: height ?? this.height,
+      padding: padding ?? this.padding,
       icon1: icon1 ?? this.icon1,
       icon2: icon2 ?? this.icon2,
       iconMulti1: iconMulti1 ?? this.iconMulti1,
       iconMulti2: iconMulti2 ?? this.iconMulti2,
       iconMulti3: iconMulti3 ?? this.iconMulti3,
       maxLine: maxLine ?? this.maxLine,
+      selectedDecoration: selectedDecoration ?? this.selectedDecoration,
+      unselectedDecoration: unselectedDecoration ?? this.unselectedDecoration,
     );
   }
 }
@@ -353,7 +381,8 @@ class SWrapThemeData {
         other.selectedStyle == selectedStyle &&
         other.unselectedStyle == unselectedStyle &&
         other.selectedDecoration == selectedDecoration &&
-        other.unselectedDecoration == unselectedDecoration;
+        other.unselectedDecoration == unselectedDecoration &&
+        other.constraints == constraints;
   }
 
   @override
@@ -364,27 +393,28 @@ class SWrapThemeData {
         selectedStyle.hashCode ^
         unselectedStyle.hashCode ^
         selectedDecoration.hashCode ^
-        unselectedDecoration.hashCode;
+        unselectedDecoration.hashCode ^
+        constraints.hashCode;
   }
 
-  SWrapThemeData copyWith({
-    double? runSpacing,
-    double? spacing,
-    EdgeInsets? itemPadding,
-    TextStyle? selectedStyle,
-    TextStyle? unselectedStyle,
-    BoxDecoration? selectedDecoration,
-    BoxDecoration? unselectedDecoration,
-  }) {
+  SWrapThemeData copyWith(
+      {double? runSpacing,
+      double? spacing,
+      EdgeInsets? itemPadding,
+      TextStyle? selectedStyle,
+      TextStyle? unselectedStyle,
+      BoxDecoration? selectedDecoration,
+      BoxDecoration? unselectedDecoration,
+      BoxConstraints? constraints}) {
     return SWrapThemeData(
-      runSpacing: runSpacing ?? this.runSpacing,
-      spacing: spacing ?? this.spacing,
-      itemPadding: itemPadding ?? this.itemPadding,
-      selectedStyle: selectedStyle ?? this.selectedStyle,
-      unselectedStyle: unselectedStyle ?? this.unselectedStyle,
-      selectedDecoration: selectedDecoration ?? this.selectedDecoration,
-      unselectedDecoration: unselectedDecoration ?? this.unselectedDecoration,
-    );
+        runSpacing: runSpacing ?? this.runSpacing,
+        spacing: spacing ?? this.spacing,
+        itemPadding: itemPadding ?? this.itemPadding,
+        selectedStyle: selectedStyle ?? this.selectedStyle,
+        unselectedStyle: unselectedStyle ?? this.unselectedStyle,
+        selectedDecoration: selectedDecoration ?? this.selectedDecoration,
+        unselectedDecoration: unselectedDecoration ?? this.unselectedDecoration,
+        constraints: constraints ?? this.constraints);
   }
 }
 

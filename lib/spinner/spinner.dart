@@ -1,12 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import './state.dart';
 import 'route/trans_dialog.dart';
 import 'theme.dart';
 
 typedef SpinnerBoxBuilder = List<SpinnerPopScope> Function(
     PopupValueNotifier spinner);
+
+typedef SpinnerHeaderBuilder = List<Widget> Function(
+    BuildContext context, PopupValueNotifier spinner);
 
 /// 自定义下拉菜单弹框
 ///
@@ -34,17 +38,17 @@ class SpinnerBox extends StatefulWidget {
   ///  'or' notifier.close();
   ///  'or' notifier.reset();
   /// ```
-  SpinnerBox({
-    super.key,
-    required this.controller,
-    // required this.titles,
-    required List<SpinnerPopScope> children,
-    this.prefix,
-    this.suffix,
-    this.theme = defaultPinnerTheme,
-    this.barrierColor,
-    this.transitionsBuilder,
-  }) {
+  SpinnerBox(
+      {super.key,
+      required this.controller,
+      // required this.titles,
+      required List<SpinnerPopScope> children,
+      this.prefix,
+      this.suffix,
+      this.theme = defaultPinnerTheme,
+      this.barrierColor,
+      this.transitionsBuilder,
+      this.headerBuilder}) {
     isRebuilder = false;
     widgets = children;
   }
@@ -70,16 +74,16 @@ class SpinnerBox extends StatefulWidget {
   ///  'or' notifier.close();
   ///  'or' notifier.reset();
   /// ```
-  SpinnerBox.builder({
-    super.key,
-    required List<SpinnerData> titles,
-    required SpinnerBoxBuilder builder,
-    this.prefix,
-    this.suffix,
-    this.theme = defaultPinnerTheme,
-    this.barrierColor,
-    this.transitionsBuilder,
-  }) {
+  SpinnerBox.builder(
+      {super.key,
+      required List<SpinnerData> titles,
+      required SpinnerBoxBuilder builder,
+      this.prefix,
+      this.suffix,
+      this.theme = defaultPinnerTheme,
+      this.barrierColor,
+      this.transitionsBuilder,
+      this.headerBuilder}) {
     isRebuilder = false;
     controller = PopupValueNotifier.titles(titles);
     widgets = builder.call(controller);
@@ -88,16 +92,16 @@ class SpinnerBox extends StatefulWidget {
   /// 每次唤起弹框，都会重新构建内部视图
   /// 可以减少对数据源的监听修改
   ///
-  SpinnerBox.rebuilder({
-    super.key,
-    required List<SpinnerData> titles,
-    required SpinnerBoxBuilder builder,
-    this.prefix,
-    this.suffix,
-    this.theme = defaultPinnerTheme,
-    this.barrierColor,
-    this.transitionsBuilder,
-  }) {
+  SpinnerBox.rebuilder(
+      {super.key,
+      required List<SpinnerData> titles,
+      required SpinnerBoxBuilder builder,
+      this.prefix,
+      this.suffix,
+      this.theme = defaultPinnerTheme,
+      this.barrierColor,
+      this.transitionsBuilder,
+      this.headerBuilder}) {
     isRebuilder = true;
     controller = PopupValueNotifier.titles(titles);
     widgetsBuilder = builder;
@@ -114,6 +118,9 @@ class SpinnerBox extends StatefulWidget {
 
   /// 标题
   // final List<String> titles;
+
+  /// 标题内容构建
+  final SpinnerHeaderBuilder? headerBuilder;
 
   /// 弹框内容构建
   late List<SpinnerPopScope> widgets;
@@ -350,38 +357,7 @@ class _CompsitedTarget extends StatelessWidget {
                 }
               },
             ),
-          ...List.generate(
-            _notifier.orginItems.length,
-            (index) => Expanded(
-              child: LayoutBuilder(builder: (_, constraints) {
-                return GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    _notifier.updateSelected(index);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: ValueListenableBuilder<PopupState>(
-                      valueListenable: _notifier,
-                      builder: (context, value, child) {
-                        return _Button(
-                          value.items[index],
-                          value.selected == index,
-                          config,
-                          maxWidth: constraints.minWidth,
-                          isHighlight: (config.selectedMark
-                                  ? value.items[index] !=
-                                      value.orginItems[index]
-                                  : false) ||
-                              value.highlightSpec['high_$index'] == true,
-                        );
-                      },
-                    ),
-                  ),
-                );
-              }),
-            ),
-          ),
+          ...buildHeader(context),
           if (widget.suffix != null)
             FocusScope(
               child: widget.suffix!,
@@ -392,6 +368,43 @@ class _CompsitedTarget extends StatelessWidget {
               },
             ),
         ]),
+      ),
+    );
+  }
+
+  List<Widget> buildHeader(BuildContext context) {
+    if (widget.headerBuilder != null) {
+      return widget.headerBuilder!(context, _notifier);
+    }
+    return List.generate(
+      _notifier.orginItems.length,
+      (index) => Expanded(
+        child: LayoutBuilder(builder: (_, constraints) {
+          return GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              _notifier.updateSelected(index);
+            },
+            child: Container(
+              alignment: Alignment.center,
+              child: ValueListenableBuilder<PopupState>(
+                valueListenable: _notifier,
+                builder: (context, value, child) {
+                  return _Button(
+                    value.items[index],
+                    value.selected == index,
+                    config,
+                    maxWidth: constraints.minWidth,
+                    isHighlight: (config.selectedMark
+                            ? value.items[index] != value.orginItems[index]
+                            : false) ||
+                        value.highlightSpec['high_$index'] == true,
+                  );
+                },
+              ),
+            ),
+          );
+        }),
       ),
     );
   }

@@ -164,6 +164,7 @@ class _SpinnerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = SpinnerBoxTheme.of(context);
     final notifier = _FilterNotiferScope.of(context);
     final items = notifier.value.items;
     final single = notifier.value.singleConditionAndSingleSelect;
@@ -171,12 +172,8 @@ class _SpinnerContent extends StatelessWidget {
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
-      padding: EdgeInsets.only(
-        left: 12,
-        right: 12,
-        top: 0,
-        bottom: single ? 0 : kBotBtnHeight,
-      ),
+      padding: theme.padding
+          .copyWith(bottom: single ? theme.padding.bottom : kBotBtnHeight),
       itemBuilder: (context, index) {
         return _FilterGroupScope(
           data: (items[index], index),
@@ -195,22 +192,23 @@ class _BotButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final notifier = _FilterNotiferScope.of(context);
     final single = notifier.value.singleConditionAndSingleSelect;
-    final theme = SpinnerBoxTheme.of(context).buttons;
+    final theme = SpinnerBoxTheme.of(context);
+    final btnsTheme = theme.buttons;
 
     if (single) return const SizedBox();
 
     return Container(
       height: kBotBtnHeight,
-      padding: const EdgeInsets.all(12),
+      padding: theme.padding.copyWith(top: 12),
       decoration: BoxDecoration(
-        color: theme.backgroundColor,
+        color: btnsTheme.backgroundColor,
       ),
       child: Row(
         children: [
           Expanded(
             child: TapScope(
               onPressed: () {
-                if (theme.isRest) {
+                if (btnsTheme.isRest) {
                   notifier.reset();
                   notifier.resetAttachment();
                 } else {
@@ -218,12 +216,12 @@ class _BotButtons extends StatelessWidget {
                   notifier.completed(true);
                 }
               },
-              child: theme.left ??
+              child: btnsTheme.left ??
                   Container(
                     alignment: Alignment.center,
                     height: 40,
-                    decoration: theme.leftDecoration,
-                    child: Text(theme.leftTxt, style: theme.leftStyle),
+                    decoration: btnsTheme.leftDecoration,
+                    child: Text(btnsTheme.leftTxt, style: btnsTheme.leftStyle),
                   ),
             ),
           ),
@@ -231,12 +229,13 @@ class _BotButtons extends StatelessWidget {
           Expanded(
             child: TapScope(
               onPressed: notifier.completed,
-              child: theme.right ??
+              child: btnsTheme.right ??
                   Container(
                     alignment: Alignment.center,
                     height: 40,
-                    decoration: theme.rightDecoration,
-                    child: Text(theme.rightTxt, style: theme.rightStyle),
+                    decoration: btnsTheme.rightDecoration,
+                    child:
+                        Text(btnsTheme.rightTxt, style: btnsTheme.rightStyle),
                   ),
             ),
           ),

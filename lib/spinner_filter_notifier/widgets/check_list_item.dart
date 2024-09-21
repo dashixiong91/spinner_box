@@ -23,22 +23,29 @@ class _CheckListItem extends StatelessWidget {
           ? (theme.iconMulti1 ?? Assets.name('muti_select'))
           : (theme.iconMulti2 ?? Assets.name('muti_unselect'));
     }
-
+    var emptyBoxDecoration = const BoxDecoration();
     return SizedBox(
       height: theme.height,
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              name,
-              style: isSelect ? theme.selectedStyle : theme.unselectedStyle,
-              overflow: TextOverflow.ellipsis,
-              maxLines: theme.maxLine,
-            ),
+      child: DecoratedBox(
+        decoration: isSelect
+            ? theme.selectedDecoration ?? emptyBoxDecoration
+            : theme.unselectedDecoration ?? emptyBoxDecoration,
+        child: Padding(
+          padding: theme.padding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  name,
+                  style: isSelect ? theme.selectedStyle : theme.unselectedStyle,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: theme.maxLine,
+                ),
+              ),
+              icon,
+            ],
           ),
-          icon,
-          const SizedBox(width: 6),
-        ],
+        ),
       ),
     );
   }
