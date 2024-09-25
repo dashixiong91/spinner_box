@@ -51,8 +51,8 @@ class _FenceCntState extends State<_FenceCnt> {
 class _FenceList extends StatelessWidget {
   const _FenceList(
       {required this.column,
-    required this.data,
-    required this.notifier,
+      required this.data,
+      required this.notifier,
       this.isLast = false});
 
   final int column;
@@ -145,11 +145,14 @@ class _FenceListItem extends StatelessWidget {
           ? fence.hightlightedColors[column]
           : const Color(0xfff7f7f7);
     }
+    if (column == notifier.value.idxList.length - 1 && item.selected) {
+      color = fence.hightlightedColors[column];
+    }
 
     return Container(
       color: color,
       height: fence.height,
-      padding: const EdgeInsets.only(left: 12),
+      padding: const EdgeInsets.only(left: 14),
       child: Row(
         children: [
           Expanded(
