@@ -30,14 +30,14 @@ class _FenceCntState extends State<_FenceCnt> {
           children: [
             ...List.generate(value.idxList.length, (index) {
               final List<SpinnerItemData> data = notifier.getColumn(index);
-
+              final isLast = index == value.idxList.length - 1;
               return Expanded(
-                flex: 1,
+                flex: isLast ? 2 : 1,
                 child: _FenceList(
                   column: index,
                   data: data,
                   notifier: notifier,
-                  isLast: index == value.idxList.length - 1,
+                  isLast: isLast,
                 ),
               );
             }),
@@ -51,8 +51,8 @@ class _FenceCntState extends State<_FenceCnt> {
 class _FenceList extends StatelessWidget {
   const _FenceList(
       {required this.column,
-      required this.data,
-      required this.notifier,
+    required this.data,
+    required this.notifier,
       this.isLast = false});
 
   final int column;
@@ -70,12 +70,6 @@ class _FenceList extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: columnColor,
-        border: Border(
-          right: BorderSide(
-            width: isLast ? 0 : 0.5,
-            color: const Color(0xfff5f5f5),
-          ),
-        ),
       ),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
