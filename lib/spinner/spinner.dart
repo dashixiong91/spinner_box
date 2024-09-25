@@ -300,7 +300,7 @@ class _CompositedFollower extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius:
-                      BorderRadius.vertical(bottom: Radius.circular(8)),
+                      BorderRadius.vertical(bottom: Radius.circular(10)),
                 ),
                 constraints: BoxConstraints(
                   maxHeight: _maxHeight * scope.scale,
