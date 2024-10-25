@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../providers/entity.dart';
+
 /// 筛选框按钮组的样式主题构建
 class SpinnerBoxTheme extends InheritedWidget {
   const SpinnerBoxTheme({
@@ -245,6 +247,8 @@ class SColumnThemeData {
   /// 最大显示行数
   final int? maxLine;
 
+  final Widget Function(SpinnerItemData item)? itemBuilder;
+
   const SColumnThemeData({
     this.maxLine = 1,
     this.height = 30,
@@ -260,6 +264,7 @@ class SColumnThemeData {
         color: Color(0xff20263A), fontSize: 14, fontWeight: FontWeight.normal),
     this.selectedDecoration,
     this.unselectedDecoration,
+    this.itemBuilder,
   });
 
   @override
@@ -307,6 +312,7 @@ class SColumnThemeData {
     int? maxLine,
     BoxDecoration? selectedDecoration,
     BoxDecoration? unselectedDecoration,
+    Widget Function(SpinnerItemData item)? itemBuilder,
   }) {
     return SColumnThemeData(
       selectedStyle: selectedStyle ?? this.selectedStyle,
@@ -321,6 +327,7 @@ class SColumnThemeData {
       maxLine: maxLine ?? this.maxLine,
       selectedDecoration: selectedDecoration ?? this.selectedDecoration,
       unselectedDecoration: unselectedDecoration ?? this.unselectedDecoration,
+      itemBuilder: itemBuilder ?? this.itemBuilder,
     );
   }
 }

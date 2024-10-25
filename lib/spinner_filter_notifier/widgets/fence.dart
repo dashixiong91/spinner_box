@@ -152,17 +152,20 @@ class _FenceListItem extends StatelessWidget {
     return Container(
       color: color,
       height: fence.height,
-      padding: const EdgeInsets.only(left: 14),
+      padding: theme.padding,
       child: Row(
         children: [
           Expanded(
-            child: Text(
-              item.name,
-              style:
-                  item.selected ? theme.selectedStyle : theme.unselectedStyle,
-              overflow: TextOverflow.ellipsis,
-              maxLines: theme.maxLine,
-            ),
+            child: Builder(builder: (context) {
+              if (theme.itemBuilder != null) return theme.itemBuilder!(item);
+              return Text(
+                item.name,
+                style:
+                    item.selected ? theme.selectedStyle : theme.unselectedStyle,
+                overflow: TextOverflow.ellipsis,
+                maxLines: theme.maxLine,
+              );
+            }),
           ),
           const SizedBox(width: 6),
           GestureDetector(
