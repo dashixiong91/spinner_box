@@ -158,7 +158,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.1-fix.6"
+    version: "0.1.1-fix.7"
   stack_trace:
     dependency: transitive
     description:
