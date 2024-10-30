@@ -198,6 +198,7 @@ class _SpinnerBoxState extends State<SpinnerBox> {
     );
 
     _router = TransPopupRouter(
+      //FIXME: https://github.com/flutter/flutter/issues/14288
       offsetY: _notifier.spinnerRect().bottom + 1,
       barrierColor: widget.barrierColor ?? Colors.black12,
       pageBuilder: (context, animation, secondaryAnimation) => content,
