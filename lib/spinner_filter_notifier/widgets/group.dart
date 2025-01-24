@@ -112,13 +112,8 @@ class _GroupBtnsCnt extends StatelessWidget {
               ),
             );
           }),
-          ...List.generate(notifier.attachment.length, (index) {
-            final attach = notifier.attachment[index];
-            if (attach.groupKey == data.$1.key) {
-              return attach;
-            }
-            return const SizedBox();
-          })
+          ...notifier.attachment
+              .where((attach) => attach.groupKey == data.$1.key)
         ]);
   }
 }
